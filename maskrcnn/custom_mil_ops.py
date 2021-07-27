@@ -2,40 +2,6 @@
 from coremltools.converters.mil.mil.ops.defs._op_reqs import *
 from coremltools.converters.mil.mil.types.symbolic import is_symbolic
 
-
-# std::tuple<torch::Tensor, torch::Tensor> GenerateProposalsCPUKernel(
-#     const torch::Tensor& scores,
-#     const torch::Tensor& bbox_deltas,
-#     const torch::Tensor& im_info_tensor,
-#     const torch::Tensor& anchors_tensor,
-#     double spatial_scale_,
-#     int64_t rpn_pre_nms_topN_,
-#     int64_t post_nms_topN_,
-#     double nms_thresh_,
-#     double rpn_min_size_,
-#     bool angle_bound_on_,
-#     int64_t angle_bound_lo_,
-#     int64_t angle_bound_hi_,
-#     double clip_angle_thresh_,
-#     bool legacy_plus_one_,
-#     c10::optional<std::vector<torch::Tensor>> /* unused */={});
-# ['scores.2', 'bbox_deltas.2', 'im_info.1', '1', '172', '171', '170', '169', '168', '151', '167', '166', '165', '152', '154']
-# input[0]:  %scores.1: (1, 15, 25, 14, fp32)(Tensor)
-# input[1]:  %bbox_deltas.1: (1, 60, 25, 14, fp32)(Tensor)
-# input[2]:  %input_1: (1, 3, fp32)(Tensor)
-# input[3]:  %1: (15, 4, fp32)*(Tensor)
-# input[4]:  %172: (fp32)*(Scalar)
-# input[5]:  %171: (int32)*(Scalar)
-# input[6]:  %170: (int32)*(Scalar)
-# input[7]:  %169: (fp32)*(Scalar)
-# input[8]:  %168: (fp32)*(Scalar)
-# input[9]:  %151: (bool)*(Scalar)
-# input[10]:  %167: (int32)*(Scalar)
-# input[11]:  %166: (int32)*(Scalar)
-# input[12]:  %165: (fp32)*(Scalar)
-# input[13]:  %152: (bool)*(Scalar)
-# input[14]:  None
-
 @register_op(doc_str='generateproposals', is_custom_op=True)
 class generateproposals(Operation):
     input_spec = InputSpec(
@@ -72,7 +38,6 @@ class generateproposals(Operation):
             'angle_bound_hi',
             'clip_angle_thresh',
             'legacy_plus_one',
-            # 'unknown'
         ],
         'description': "Generate Proposals Custom Layer"
     }
@@ -82,19 +47,9 @@ class generateproposals(Operation):
 
     def type_inference(self):
         dtype = self.scores.dtype
-        # the symbolic shape it not attainable at compile time.
+        # the symbolic shapes are not attainable at compile time.
         return types.tensor(dtype,[]), types.tensor(dtype,[])
-        
-# torch::Tensor RoIAlign(
-    # const torch::Tensor& features,
-    # const torch::Tensor& rois,
-    # std::string order,
-    # double spatial_scale,
-    # int64_t aligned_height,
-    # int64_t aligned_width,
-    # int64_t sampling_ratio,
-    # bool aligned,
-    # c10::optional<std::vector<torch::Tensor>>);
+
 @register_op(doc_str='roialign', is_custom_op=True)
 class roialign(Operation):
     input_spec = InputSpec(
@@ -122,7 +77,6 @@ class roialign(Operation):
             "aligned_width",
             "sampling_ratio",
             "aligned",
-            # "unknown",
         ],
         "description": "Roi Align Custom Layers"
     }
@@ -136,8 +90,8 @@ class roialign(Operation):
         features_shape = list(self.features.shape)
         h = self.aligned_height.val
         w = self.aligned_width.val
+        # fake shape to make conv happy
         shape = [1, features_shape[1], h, w]
-        # the symbolic shape it not attainable at compile time.
         return types.tensor(dtype, shape)
 
     
@@ -174,7 +128,6 @@ class bboxtransform(Operation):
             "angle_bound_hi",
             "clip_angle_thresh",
             "legacy_plus_one",
-            # "unknown",
         ],
         "description": "BBox Transformation Custom Layer"
     }
@@ -187,7 +140,7 @@ class bboxtransform(Operation):
         box_out_shape = list(self.delta_in.shape)
         batch_size = self.iminfo_in.shape[0]
         roi_batch_split_shape = [batch_size]
-        # the symbolic shape it not attainable at compile time.
+        # the symbolic shapes are not attainable at compile time.
         return types.tensor(dtype,box_out_shape), types.tensor(dtype,roi_batch_split_shape)
 
 
@@ -232,7 +185,6 @@ class boxwithnmslimit(Operation):
             "input_boxes_include_bg_cls",
             "output_classes_include_bg_cls",
             "legacy_plus_one",
-            # "unknown",
         ],
         "description": "BoxWithNMSLimit Custom Layer"
     }
@@ -242,7 +194,7 @@ class boxwithnmslimit(Operation):
 
     def type_inference(self):
         dtype = self.tscores.dtype
-        # the symbolic shape it not attainable at compile time.
+        # the symbolic shapes are not attainable at compile time.
         return (
             types.tensor(dtype,[]), 
             types.tensor(dtype,[]),

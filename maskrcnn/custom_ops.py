@@ -1,7 +1,6 @@
 # Import MIL builder
 from coremltools.converters.mil.mil import Builder as mb
 from coremltools.converters.mil.frontend.torch.torch_op_registry import _TORCH_OPS_REGISTRY, register_torch_op
-# from custom_mil_ops import generateproposals
 from maskrcnn.custom_mil_ops import generateproposals,roialign, bboxtransform, boxwithnmslimit
 from coremltools.converters.mil.mil import types
 
