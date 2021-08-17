@@ -1,6 +1,7 @@
 #include "BoxWithNMSLimit.h"
 #include "box_with_nms_limit.h"
 #include <string>
+#import "multiArray.h"
 
 @implementation BoxWithNMSLimit {
     double score_thres_;
@@ -39,11 +40,12 @@
     return tensor;
 }
 
-
-- (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error  API_AVAILABLE(ios(11.0)){
-    auto tscores = [self tensorFromMLMultiArray2:inputs[0]];
-    auto tboxes = [self tensorFromMLMultiArray2:inputs[1]];
-    auto tbatch_splits = [self tensorFromMLMultiArray1:inputs[2]];
+- (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
+    
+    at::Tensor tscores       = tensorFromMultiArray(inputs[0], 2);
+    at::Tensor tboxes        = tensorFromMultiArray(inputs[1], 2);
+    at::Tensor tbatch_splits = tensorFromMultiArray(inputs[2], 1);
+    
     auto results = caffe2::fb::BoxWithNMSLimitCPUKernel(tscores,
                                                         tboxes,
                                                         tbatch_splits,

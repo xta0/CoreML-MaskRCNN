@@ -105,7 +105,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
     size_t orig_width = CVPixelBufferGetWidth(imageBuffer);
     size_t orig_height = CVPixelBufferGetHeight(imageBuffer);
     size_t stride = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer, planeIndex);
-    // resize image
+    // resize the image
     CGSize size = calculateSize(orig_height, orig_width);
     cv::Mat matBgra = cv::Mat(orig_height, orig_width, CV_8UC4, (void *)baseAddress, stride);
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
@@ -114,12 +114,12 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
     cv::Mat matResizedRgb;
     cv::cvtColor(matResizedBgra, matResizedRgb, CV_BGRA2RGB);
     std::vector<float> bgrBuffer;
-    convertBGRAToBGRPlaneForARTracking(
-                                       matResizedBgra.data,
-                                       bgrBuffer,
-                                       (int)size.width,
-                                       (int)size.height
-                                       );
+    convertBGRAToBGRPlane(
+                          matResizedBgra.data,
+                          bgrBuffer,
+                          (int)size.width,
+                          (int)size.height
+                          );
     at::Tensor input0 = torch::from_blob(bgrBuffer.data(), {1, 3, (int)size.height, (int)size.width}, at::kFloat);
     std::vector<float> imageSize{(float)size.height, (float)size.width, 1.0};
     at::Tensor input1 = torch::from_blob(imageSize.data(), {1, 3});
@@ -190,15 +190,11 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
         cv::Mat mat;
         cv::merge(ch, mat);
         UIImage *maskImage = MatToUIImage(mat);
-        // NSString *maskPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/maskrcnn_mask_resize.png"];
-        // [UIImagePNGRepresentation(maskImage) writeToFile:maskPath atomically:YES];
         [masks addObject:maskImage];
     }
     UIImage *resizedRGBImage = MatToUIImage(matResizedRgb);
     return drawMasks(resizedRGBImage, bboxes, masks);
-    // return img;
 }
-
 
 - (void)loadModel {
     NSError* error;
@@ -213,7 +209,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
 
 - (UIImage* )run {
     UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"maskrcnn" ofType:@"jpg"]];
-    CVImageBufferRef imageBuffer = FBPixelBufferCreateFromCGImage(image.CGImage);
+    CVImageBufferRef imageBuffer = PixelBufferCreateFromCGImage(image.CGImage);
     UIImage *output = [self processImage:imageBuffer];
     CVPixelBufferRelease(imageBuffer);
     return output;
@@ -252,6 +248,5 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
     }
     return outputs;
 }
-
 
 @end

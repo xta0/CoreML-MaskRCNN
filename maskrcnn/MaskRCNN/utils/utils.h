@@ -46,48 +46,6 @@ static inline CGSize calculateSize(int h, int w)
     return CGSizeMake((int)(neww + 0.5), (int)(newh + 0.5));
 }
 
-static UIImage *resize(UIImage *image, CGSize newSize)
-{
-    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
-    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    NSString *imagePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/maskrcnn_resize.png"];
-    NSLog(@"%@", imagePath);
-    [UIImagePNGRepresentation(newImage) writeToFile:imagePath atomically:YES];
-    return newImage;
-}
-
-static std::vector<float> BGRPlane(UIImage* image){
-    CGImageRef inputCGImage = image.CGImage;
-    NSUInteger width = CGImageGetWidth(inputCGImage);
-    NSUInteger height = CGImageGetHeight(inputCGImage);
-    NSUInteger bytesPerPixel = 4;
-    NSUInteger bytesPerRow = bytesPerPixel * width;
-    NSUInteger bitsPerComponent = 8;
-    std::vector<uint8_t> rawPixels(width *height * bytesPerPixel);
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context =
-    CGBitmapContextCreate(
-                          rawPixels.data(),
-                          width,
-                          height,
-                          bitsPerComponent,
-                          bytesPerRow,
-                          colorSpace,
-                          kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big
-                          );
-    CGContextDrawImage(context, CGRectMake(0, 0, width, height), inputCGImage);
-    CGColorSpaceRelease(colorSpace);
-    CGContextRelease(context);
-    std::vector<float> buffer(height * width * 3);
-    for (NSUInteger i = 0; i < height * width; ++i) {
-        buffer[i] = rawPixels[i * 4 + 2];
-        buffer[width * height + i] = rawPixels[i * 4 + 1];
-        buffer[width * height * 2 + i] = rawPixels[i * 4];
-    }
-    return buffer;
-}
 
 static UIImage *drawMasks(UIImage *image,
                           const std::vector<CGRect> &bboxes,
@@ -103,7 +61,7 @@ static UIImage *drawMasks(UIImage *image,
             CGContextSetStrokeColorWithColor(context, [randomColor() CGColor]);
             CGContextStrokeRect(context, CGRectMake(box.origin.x, box.origin.y, box.size.width, box.size.height));
             // draw mask
-            [masks[i] drawInRect:CGRectMake(box.origin.x, box.origin.y, box.size.width, box.size.height)];
+//            [masks[i] drawInRect:CGRectMake(box.origin.x, box.origin.y, box.size.width, box.size.height)];
         }
     }
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
@@ -217,7 +175,7 @@ inline void convertBGRAToBGRPlaneWithDimensionsOffsetAndScale(const uint8_t* bgr
 }
 
 // A flavor of the conversion that does not do any BGR offsetting. Models using this should have in-model normalization
-static inline void convertBGRAToBGRPlaneForARTracking(const uint8_t* bgraPtr, std::vector<float>& bgrPlane, int width, int height) {
+static inline void convertBGRAToBGRPlane(const uint8_t* bgraPtr, std::vector<float>& bgrPlane, int width, int height) {
     float scaleDownWidth = 0.0f, scaleDownHeight = 0.0f;
     float BGRChannelOffset[3] = {0.0f, 0.0f, 0.0f};
     scaleDownHeight = height;
@@ -235,7 +193,7 @@ static inline NSDictionary *DefaultPixelBufferAttributes()
     
     return attributes;
 }
-static inline CVPixelBufferRef FBPixelBufferCreateFromResizedCGImage(CGImageRef image, CGSize outputSize)
+static inline CVPixelBufferRef PixelBufferCreateFromResizedCGImage(CGImageRef image, CGSize outputSize)
 {
     CVPixelBufferRef pxbuffer = NULL;
     CVReturn status = CVPixelBufferCreate(
@@ -277,10 +235,10 @@ static inline CVPixelBufferRef FBPixelBufferCreateFromResizedCGImage(CGImageRef 
     return pxbuffer;
 }
 
-static inline CVPixelBufferRef FBPixelBufferCreateFromCGImage(CGImageRef image)
+static inline CVPixelBufferRef PixelBufferCreateFromCGImage(CGImageRef image)
 {
     const CGSize frameSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
-    return FBPixelBufferCreateFromResizedCGImage(image, frameSize);
+    return PixelBufferCreateFromResizedCGImage(image, frameSize);
 }
 
 #endif /* utils_h */

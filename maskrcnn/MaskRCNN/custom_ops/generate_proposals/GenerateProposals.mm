@@ -1,6 +1,7 @@
 #include "GenerateProposals.h"
 #include "generate_proposals.h"
 #include <torch/script.h>
+#import "multiArray.h"
 
 @implementation GenerateProposals {
     double spatial_scale_;
@@ -37,11 +38,13 @@
     return tensor;
 }
 
-- (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error  API_AVAILABLE(ios(11.0)){
-    auto scores = [self tensorFromMLMultiArray:inputs[0]];
-    auto bbox_deltas = [self tensorFromMLMultiArray:inputs[1]];
-    auto im_info_tensor = [self tensorFromMLMultiArray2:inputs[2]];
-    auto anchors_tensor = [self tensorFromMLMultiArray2:inputs[3]];
+- (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
+    
+    at::Tensor scores         = tensorFromMultiArray(inputs[0], 4);
+    at::Tensor bbox_deltas    = tensorFromMultiArray(inputs[1], 4);
+    at::Tensor im_info_tensor = tensorFromMultiArray(inputs[2], 2);
+    at::Tensor anchors_tensor = tensorFromMultiArray(inputs[3], 2);
+    
     auto result = caffe2::fb::GenerateProposalsCPUKernel(
           scores,
           bbox_deltas,

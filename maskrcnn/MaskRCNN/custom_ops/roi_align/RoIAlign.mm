@@ -1,6 +1,7 @@
 #include "RoIAlign.h"
 #include "roi_align.h"
 #include <torch/script.h>
+#import "multiArray.h"
 
 @implementation RoIAlign {
     double spatial_scale_;
@@ -32,9 +33,10 @@
     return tensor;
 }
 
-- (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error  API_AVAILABLE(ios(11.0)){
-    auto features = [self tensorFromMLMultiArray:inputs[0]];
-    auto rois = [self tensorFromMLMultiArray2:inputs[1]];
+- (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
+    
+    at::Tensor features = tensorFromMultiArray(inputs[0], 4);
+    at::Tensor rois     = tensorFromMultiArray(inputs[1], 2);
     auto result = caffe2::fb::RoIAlignCPUKernel(features,
                                                 rois,
                                                 "NCHW",

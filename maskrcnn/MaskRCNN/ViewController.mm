@@ -28,39 +28,39 @@
     _modelRunner = [MaskRCNNModelRunner new];
     [self showSpinner];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-      [self->_modelRunner loadModel];
-      UIImage* image = [self->_modelRunner run];
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self hideSpinner];
-        self->_imageView.image = image;
-      });
+        [self->_modelRunner loadModel];
+        UIImage* image = [self->_modelRunner run];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideSpinner];
+            self->_imageView.image = image;
+        });
     });
 }
 
 
 - (void)showSpinner
 {
-  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-  view.tag = 99;
-  view.translatesAutoresizingMaskIntoConstraints = NO;
-  view.layer.cornerRadius = 8;
-  view.layer.masksToBounds = YES;
-  view.backgroundColor = [UIColor grayColor];
-  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]
-                                      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-  CGRect frame = CGRectMake(0, 0, 40, 40);
-  frame.origin.x = view.frame.size.width / 2 - frame.size.width / 2;
-  frame.origin.y = view.frame.size.height / 2 - frame.size.height / 2;
-  spinner.frame = frame;
-  [view addSubview:spinner];
-  [spinner startAnimating];
-  view.center = self.view.center;
-  [self.view addSubview:view];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    view.tag = 99;
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+    view.layer.cornerRadius = 8;
+    view.layer.masksToBounds = YES;
+    view.backgroundColor = [UIColor grayColor];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]
+                                        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    CGRect frame = CGRectMake(0, 0, 40, 40);
+    frame.origin.x = view.frame.size.width / 2 - frame.size.width / 2;
+    frame.origin.y = view.frame.size.height / 2 - frame.size.height / 2;
+    spinner.frame = frame;
+    [view addSubview:spinner];
+    [spinner startAnimating];
+    view.center = self.view.center;
+    [self.view addSubview:view];
 }
 
 - (void)hideSpinner
 {
-  [[self.view viewWithTag:99] removeFromSuperview];
+    [[self.view viewWithTag:99] removeFromSuperview];
 }
 
 

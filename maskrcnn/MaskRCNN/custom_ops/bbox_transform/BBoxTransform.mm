@@ -1,7 +1,10 @@
 #include "BBoxTransform.h"
 #include "bbox_transform.h"
+
 #include <vector>
 #include <torch/script.h>
+
+#import "multiArray.h"
 
 @implementation BBoxTransform
 {
@@ -38,11 +41,12 @@
 }
 
 
-- (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error  API_AVAILABLE(ios(11.0)){
-    auto roi_in = [self tensorFromMLMultiArray2:inputs[0]];
-    auto delta_in = [self tensorFromMLMultiArray2:inputs[1]];
-    auto iminfo_in = [self tensorFromMLMultiArray2:inputs[2]];
-    auto weights = [self tensorFromMLMultiArray1:inputs[3]];
+- (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
+    
+    at::Tensor roi_in       = tensorFromMultiArray(inputs[0], 2);
+    at::Tensor delta_in     = tensorFromMultiArray(inputs[1], 2);
+    at::Tensor iminfo_in    = tensorFromMultiArray(inputs[2], 2);
+    at::Tensor weights      = tensorFromMultiArray(inputs[3], 1);
     TORCH_CHECK(weights.numel() == 4)
     weights_ = {};
     for(int i=0; i<4; ++i){

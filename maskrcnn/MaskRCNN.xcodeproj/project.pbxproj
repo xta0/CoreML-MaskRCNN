@@ -25,11 +25,9 @@
 		A0EC87D526C78E6E0022E39A /* RoIAlign.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87D426C78E6E0022E39A /* RoIAlign.mm */; };
 		A0EC87D826C78F860022E39A /* BBoxTransform.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87D726C78F860022E39A /* BBoxTransform.mm */; };
 		A0EC87DB26C790710022E39A /* BoxWithNMSLimit.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87DA26C790710022E39A /* BoxWithNMSLimit.mm */; };
-		A0EC87DD26C7919E0022E39A /* maskrcnn_oss_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87DC26C7919E0022E39A /* maskrcnn_oss_coreml.mlmodel */; };
 		A0EC87E026C791F90022E39A /* MaskRCNNModelRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87DF26C791F90022E39A /* MaskRCNNModelRunner.mm */; };
-		A0EC87E526C8154E0022E39A /* utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87E426C8154E0022E39A /* utils.mm */; };
 		A0EC87E726C821FC0022E39A /* maskrcnn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0EC87E626C821FC0022E39A /* maskrcnn.jpg */; };
-		A0EC87E926C827B90022E39A /* maskrcnn_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87E826C827B90022E39A /* maskrcnn_coreml.mlmodel */; };
+		A0EC87ED26CB411A0022E39A /* maskrcnn_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87EC26CB411A0022E39A /* maskrcnn_coreml.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,14 +66,13 @@
 		A0EC87D726C78F860022E39A /* BBoxTransform.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BBoxTransform.mm; sourceTree = "<group>"; };
 		A0EC87D926C790710022E39A /* BoxWithNMSLimit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoxWithNMSLimit.h; sourceTree = "<group>"; };
 		A0EC87DA26C790710022E39A /* BoxWithNMSLimit.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BoxWithNMSLimit.mm; sourceTree = "<group>"; };
-		A0EC87DC26C7919E0022E39A /* maskrcnn_oss_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_oss_coreml.mlmodel; sourceTree = SOURCE_ROOT; };
 		A0EC87DE26C791F90022E39A /* MaskRCNNModelRunner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MaskRCNNModelRunner.h; sourceTree = "<group>"; };
 		A0EC87DF26C791F90022E39A /* MaskRCNNModelRunner.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MaskRCNNModelRunner.mm; sourceTree = "<group>"; };
 		A0EC87E226C814C10022E39A /* eigen_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eigen_utils.h; sourceTree = "<group>"; };
 		A0EC87E326C814CB0022E39A /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
-		A0EC87E426C8154E0022E39A /* utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = utils.mm; sourceTree = "<group>"; };
 		A0EC87E626C821FC0022E39A /* maskrcnn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = maskrcnn.jpg; sourceTree = SOURCE_ROOT; };
-		A0EC87E826C827B90022E39A /* maskrcnn_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_coreml.mlmodel; sourceTree = SOURCE_ROOT; };
+		A0EC87EA26CB32050022E39A /* multiArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = multiArray.h; sourceTree = "<group>"; };
+		A0EC87EC26CB411A0022E39A /* maskrcnn_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_coreml.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,10 +115,9 @@
 		A0EC79A426C739530022E39A /* MaskRCNN */ = {
 			isa = PBXGroup;
 			children = (
-				A0EC87E826C827B90022E39A /* maskrcnn_coreml.mlmodel */,
+				A0EC87EB26CB411A0022E39A /* model */,
 				A0EC87E626C821FC0022E39A /* maskrcnn.jpg */,
 				A0EC87E126C814C10022E39A /* utils */,
-				A0EC87DC26C7919E0022E39A /* maskrcnn_oss_coreml.mlmodel */,
 				A0EC87B026C7889D0022E39A /* custom_ops */,
 				A0EC79A526C739530022E39A /* AppDelegate.h */,
 				A0EC79A626C739530022E39A /* AppDelegate.m */,
@@ -206,10 +202,18 @@
 			children = (
 				A0EC87E226C814C10022E39A /* eigen_utils.h */,
 				A0EC87E326C814CB0022E39A /* utils.h */,
-				A0EC87E426C8154E0022E39A /* utils.mm */,
+				A0EC87EA26CB32050022E39A /* multiArray.h */,
 			);
 			path = utils;
 			sourceTree = "<group>";
+		};
+		A0EC87EB26CB411A0022E39A /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A0EC87EC26CB411A0022E39A /* maskrcnn_coreml.mlmodel */,
+			);
+			path = model;
+			sourceTree = SOURCE_ROOT;
 		};
 		B66CE69A6F864305099B07DD /* Frameworks */ = {
 			isa = PBXGroup;
@@ -300,11 +304,9 @@
 				A0EC87E026C791F90022E39A /* MaskRCNNModelRunner.mm in Sources */,
 				A0EC87DB26C790710022E39A /* BoxWithNMSLimit.mm in Sources */,
 				A0EC87C426C78C600022E39A /* roi_align_impl-cpu.cpp in Sources */,
-				A0EC87E526C8154E0022E39A /* utils.mm in Sources */,
-				A0EC87DD26C7919E0022E39A /* maskrcnn_oss_coreml.mlmodel in Sources */,
-				A0EC87E926C827B90022E39A /* maskrcnn_coreml.mlmodel in Sources */,
 				A0EC87CD26C78DAD0022E39A /* box_with_nms_limit.cpp in Sources */,
 				A0EC79AA26C739530022E39A /* SceneDelegate.m in Sources */,
+				A0EC87ED26CB411A0022E39A /* maskrcnn_coreml.mlmodel in Sources */,
 				A0EC87D826C78F860022E39A /* BBoxTransform.mm in Sources */,
 				A0EC87CF26C78E130022E39A /* GenerateProposals.mm in Sources */,
 			);
