@@ -17,3 +17,7 @@ Run the converter
 ```
 > python converter.py
 ```
+
+### License
+
+CoreML-MaskRCNN has a MIT-style license, as found in the LICENSE file.
