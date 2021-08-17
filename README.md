@@ -1,9 +1,12 @@
 # CoreML-MaskRCNN
-Convert the MaskRCNN torchscript model using the coremltool.
+
+### Regarding the model
+
+The model was trained on [d2go](https://github.com/facebookresearch/d2go). The architecture can be found at https://fburl.com/nr02bxjl (Mask-RCNN-FBNetV3A-dsmask).
 
 ### Demo app
 
-To run the demo app, simply do `pod install`
+The demo app is located in `maskrcnn/` directory. To run the app, simply do `pod install`. For the custom ops, we're using eigen(3.3.9) for vectorization. The code was written in C++.
 
 ### Run the converter
 
