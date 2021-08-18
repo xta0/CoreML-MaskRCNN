@@ -199,9 +199,9 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
 - (void)loadModel {
     NSError* error;
     MLModelConfiguration* config = [MLModelConfiguration alloc];
-    config.computeUnits = MLComputeUnitsCPUOnly;
+    config.computeUnits = MLComputeUnitsCPUAndGPU;
     config.allowLowPrecisionAccumulationOnGPU = YES;
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"maskrcnn_coreml.mlmodelc" ofType:nil];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"maskrcnn_oss_coreml.mlmodelc" ofType:nil];
     _mlModel = [MLModel modelWithContentsOfURL:[NSURL fileURLWithPath:path]
                                  configuration:config
                                          error:&error];
@@ -221,10 +221,12 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
     PTMCoreMLFeatureProvider* inputFeature =
     [[PTMCoreMLFeatureProvider alloc] initWithFeatureSpecs:inputs];
     MLPredictionOptions* options = [[MLPredictionOptions alloc] init];
+    NSDate* date = [NSDate date];
     id<MLFeatureProvider> outputFeatures =
     [_mlModel predictionFromFeatures:inputFeature
                              options:options
                                error:&error];
+    NSLog(@"took: %.2fms", [date timeIntervalSinceNow] * -1000);
     std::vector<NSString*> outputNames {
         @"boxwithnmslimit_0:0",
         @"boxwithnmslimit_0:1",

@@ -18,28 +18,6 @@
     bool legacy_plus_one_;
 }
 
-- (at::Tensor)tensorFromMLMultiArray:(MLMultiArray* )array API_AVAILABLE(ios(11.0)){
-    std::vector<int64_t> size;
-    for(NSNumber* n in array.shape){
-        size.push_back(n.intValue);
-    }
-    size.erase(size.begin());
-    auto tensor = at::empty(size, c10::kFloat);
-    memcpy(tensor.data_ptr<float>(), array.dataPointer, tensor.numel() * sizeof(float));
-    return tensor;
-}
-
-- (at::Tensor)tensorFromMLMultiArray2:(MLMultiArray* )array API_AVAILABLE(ios(11.0)){
-    std::vector<int64_t> size;
-    for(NSNumber* n in array.shape){
-        size.push_back(n.intValue);
-    }
-    std::vector<int64_t> sz(size.end()-2, size.end());
-    auto tensor = at::empty(sz, c10::kFloat);
-    memcpy(tensor.data_ptr<float>(), array.dataPointer, tensor.numel() * sizeof(float));
-    return tensor;
-}
-
 - (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
     
     at::Tensor scores         = tensorFromMultiArray(inputs[0], 4);
@@ -47,6 +25,7 @@
     at::Tensor im_info_tensor = tensorFromMultiArray(inputs[2], 2);
     at::Tensor anchors_tensor = tensorFromMultiArray(inputs[3], 2);
     
+    NSDate* date = [NSDate date];
     auto result = caffe2::fb::GenerateProposalsCPUKernel(
           scores,
           bbox_deltas,
@@ -63,6 +42,7 @@
           clip_angle_thresh_,
           legacy_plus_one_,
           {});
+    NSLog(@"[Generate Proposals] took: %.2fms", [date timeIntervalSinceNow] * -1000);
     auto out_rois = std::get<0>(result);
     auto out_rois_prob = std::get<1>(result);
     memcpy(outputs[0].dataPointer, out_rois.data_ptr<float>(), out_rois.numel() * sizeof(float));

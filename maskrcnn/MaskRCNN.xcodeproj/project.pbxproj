@@ -27,7 +27,7 @@
 		A0EC87DB26C790710022E39A /* BoxWithNMSLimit.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87DA26C790710022E39A /* BoxWithNMSLimit.mm */; };
 		A0EC87E026C791F90022E39A /* MaskRCNNModelRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87DF26C791F90022E39A /* MaskRCNNModelRunner.mm */; };
 		A0EC87E726C821FC0022E39A /* maskrcnn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0EC87E626C821FC0022E39A /* maskrcnn.jpg */; };
-		A0EC87ED26CB411A0022E39A /* maskrcnn_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87EC26CB411A0022E39A /* maskrcnn_coreml.mlmodel */; };
+		A0F76F8626CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0F76F8526CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,7 +72,7 @@
 		A0EC87E326C814CB0022E39A /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		A0EC87E626C821FC0022E39A /* maskrcnn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = maskrcnn.jpg; sourceTree = SOURCE_ROOT; };
 		A0EC87EA26CB32050022E39A /* multiArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = multiArray.h; sourceTree = "<group>"; };
-		A0EC87EC26CB411A0022E39A /* maskrcnn_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_coreml.mlmodel; sourceTree = "<group>"; };
+		A0F76F8526CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_oss_coreml.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,7 +210,7 @@
 		A0EC87EB26CB411A0022E39A /* model */ = {
 			isa = PBXGroup;
 			children = (
-				A0EC87EC26CB411A0022E39A /* maskrcnn_coreml.mlmodel */,
+				A0F76F8526CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel */,
 			);
 			path = model;
 			sourceTree = SOURCE_ROOT;
@@ -301,12 +301,12 @@
 				A0EC87C326C78C600022E39A /* roi_align-cpu.cpp in Sources */,
 				A0EC87D526C78E6E0022E39A /* RoIAlign.mm in Sources */,
 				A0EC79B826C739550022E39A /* main.m in Sources */,
+				A0F76F8626CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel in Sources */,
 				A0EC87E026C791F90022E39A /* MaskRCNNModelRunner.mm in Sources */,
 				A0EC87DB26C790710022E39A /* BoxWithNMSLimit.mm in Sources */,
 				A0EC87C426C78C600022E39A /* roi_align_impl-cpu.cpp in Sources */,
 				A0EC87CD26C78DAD0022E39A /* box_with_nms_limit.cpp in Sources */,
 				A0EC79AA26C739530022E39A /* SceneDelegate.m in Sources */,
-				A0EC87ED26CB411A0022E39A /* maskrcnn_coreml.mlmodel in Sources */,
 				A0EC87D826C78F860022E39A /* BBoxTransform.mm in Sources */,
 				A0EC87CF26C78E130022E39A /* GenerateProposals.mm in Sources */,
 			);
@@ -453,8 +453,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GW8XWHWQR7;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -469,8 +469,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = facebook.MaskRCNN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xta0.MaskRCNN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -480,9 +481,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GW8XWHWQR7;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -496,8 +498,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = facebook.MaskRCNN;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xta0.MaskRCNN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

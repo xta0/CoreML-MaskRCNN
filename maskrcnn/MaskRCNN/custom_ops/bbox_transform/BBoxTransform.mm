@@ -20,29 +20,6 @@
     bool legacy_plus_one_;
 }
 
-- (at::Tensor)tensorFromMLMultiArray1:(MLMultiArray* )array API_AVAILABLE(ios(11.0)){
-    std::vector<int64_t> size;
-    for(NSNumber* n in array.shape){
-        size.push_back(n.intValue);
-    }
-    std::vector<int64_t> sz(size.end()-1, size.end());
-    auto tensor = at::empty(sz, c10::kFloat);
-    memcpy(tensor.data_ptr<float>(), array.dataPointer, tensor.numel() * sizeof(float));
-    return tensor;
-}
-
-- (at::Tensor)tensorFromMLMultiArray2:(MLMultiArray* )array API_AVAILABLE(ios(11.0)){
-    std::vector<int64_t> size;
-    for(NSNumber* n in array.shape){
-        size.push_back(n.intValue);
-    }
-    std::vector<int64_t> sz(size.end()-2, size.end());
-    auto tensor = at::empty(sz, c10::kFloat);
-    memcpy(tensor.data_ptr<float>(), array.dataPointer, tensor.numel() * sizeof(float));
-    return tensor;
-}
-
-
 - (BOOL)evaluateOnCPUWithInputs:(nonnull NSArray<MLMultiArray *> *)inputs outputs:(nonnull NSArray<MLMultiArray *> *)outputs error:(NSError *__autoreleasing  _Nullable * _Nullable)error {
     
     at::Tensor roi_in       = tensorFromMultiArray(inputs[0], 2);
@@ -54,6 +31,7 @@
     for(int i=0; i<4; ++i){
         weights_.push_back(weights.data_ptr<float>()[i]);
     }
+    NSDate* date = [NSDate date];
     auto results = caffe2::fb::BBoxTransformCPUKernel(roi_in,
                                                       delta_in,
                                                       iminfo_in,
@@ -65,6 +43,7 @@
                                                       angle_bound_hi_,
                                                       clip_angle_thresh_,
                                                       legacy_plus_one_);
+    NSLog(@"[BBoxTransform] took: %.2fms", [date timeIntervalSinceNow] * -1000);
     auto box_out          = std::get<0>(results);
     auto roi_batch_splits = std::get<1>(results);
     MLMultiArray* output0 = outputs[0];

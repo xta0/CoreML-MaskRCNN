@@ -29,7 +29,10 @@
     [self showSpinner];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self->_modelRunner loadModel];
+        // warmup
         UIImage* image = [self->_modelRunner run];
+        // benchmark
+        image = [self->_modelRunner run];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self hideSpinner];
             self->_imageView.image = image;
