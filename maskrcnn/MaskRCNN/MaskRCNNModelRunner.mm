@@ -199,8 +199,13 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
 - (void)loadModel {
     NSError* error;
     MLModelConfiguration* config = [MLModelConfiguration alloc];
-    config.computeUnits = MLComputeUnitsCPUAndGPU;
+    config.computeUnits = MLComputeUnitsAll;
     config.allowLowPrecisionAccumulationOnGPU = YES;
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *basePath = paths.firstObject;
+//    NSString* modelPath = [NSString stringWithFormat:@"%@/maskrcnn_oss_coreml.mlmodel", basePath];
+//    NSURL* compiledUrl = [MLModel compileModelAtURL:[NSURL URLWithString:modelPath]
+//                                              error:&error];
     NSString* path = [[NSBundle mainBundle] pathForResource:@"maskrcnn_oss_coreml.mlmodelc" ofType:nil];
     _mlModel = [MLModel modelWithContentsOfURL:[NSURL fileURLWithPath:path]
                                  configuration:config

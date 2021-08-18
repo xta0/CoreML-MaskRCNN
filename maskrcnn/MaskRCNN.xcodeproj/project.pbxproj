@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0A1C88526CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0A1C88426CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel */; };
 		A0EC79A726C739530022E39A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC79A626C739530022E39A /* AppDelegate.m */; };
 		A0EC79AA26C739530022E39A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC79A926C739530022E39A /* SceneDelegate.m */; };
 		A0EC79AD26C739530022E39A /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC79AC26C739530022E39A /* ViewController.mm */; };
@@ -27,10 +28,10 @@
 		A0EC87DB26C790710022E39A /* BoxWithNMSLimit.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87DA26C790710022E39A /* BoxWithNMSLimit.mm */; };
 		A0EC87E026C791F90022E39A /* MaskRCNNModelRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC87DF26C791F90022E39A /* MaskRCNNModelRunner.mm */; };
 		A0EC87E726C821FC0022E39A /* maskrcnn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0EC87E626C821FC0022E39A /* maskrcnn.jpg */; };
-		A0F76F8626CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0F76F8526CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A0A1C88426CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_oss_coreml.mlmodel; sourceTree = "<group>"; };
 		A0EC79A226C739530022E39A /* MaskRCNN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaskRCNN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0EC79A526C739530022E39A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A0EC79A626C739530022E39A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -72,7 +73,6 @@
 		A0EC87E326C814CB0022E39A /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		A0EC87E626C821FC0022E39A /* maskrcnn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = maskrcnn.jpg; sourceTree = SOURCE_ROOT; };
 		A0EC87EA26CB32050022E39A /* multiArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = multiArray.h; sourceTree = "<group>"; };
-		A0F76F8526CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_oss_coreml.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +92,14 @@
 			children = (
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A0A1C88326CCF36500D2818B /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A0A1C88426CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		A0EC799926C739530022E39A = {
@@ -115,7 +123,7 @@
 		A0EC79A426C739530022E39A /* MaskRCNN */ = {
 			isa = PBXGroup;
 			children = (
-				A0EC87EB26CB411A0022E39A /* model */,
+				A0A1C88326CCF36500D2818B /* model */,
 				A0EC87E626C821FC0022E39A /* maskrcnn.jpg */,
 				A0EC87E126C814C10022E39A /* utils */,
 				A0EC87B026C7889D0022E39A /* custom_ops */,
@@ -207,14 +215,6 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
-		A0EC87EB26CB411A0022E39A /* model */ = {
-			isa = PBXGroup;
-			children = (
-				A0F76F8526CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel */,
-			);
-			path = model;
-			sourceTree = SOURCE_ROOT;
-		};
 		B66CE69A6F864305099B07DD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,10 +298,10 @@
 				A0EC87BB26C78BEE0022E39A /* generate_proposals.cpp in Sources */,
 				A0EC87C526C78C600022E39A /* roi_align.cpp in Sources */,
 				A0EC79A726C739530022E39A /* AppDelegate.m in Sources */,
+				A0A1C88526CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel in Sources */,
 				A0EC87C326C78C600022E39A /* roi_align-cpu.cpp in Sources */,
 				A0EC87D526C78E6E0022E39A /* RoIAlign.mm in Sources */,
 				A0EC79B826C739550022E39A /* main.m in Sources */,
-				A0F76F8626CCE39100AA3461 /* maskrcnn_oss_coreml.mlmodel in Sources */,
 				A0EC87E026C791F90022E39A /* MaskRCNNModelRunner.mm in Sources */,
 				A0EC87DB26C790710022E39A /* BoxWithNMSLimit.mm in Sources */,
 				A0EC87C426C78C600022E39A /* roi_align_impl-cpu.cpp in Sources */,
@@ -453,6 +453,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
@@ -481,6 +482,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
