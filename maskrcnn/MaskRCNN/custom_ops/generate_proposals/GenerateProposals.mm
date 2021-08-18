@@ -1,3 +1,5 @@
+// Copyright 2004-present Facebook. All Rights Reserved.
+
 #include "GenerateProposals.h"
 #include "generate_proposals.h"
 #include <torch/script.h>

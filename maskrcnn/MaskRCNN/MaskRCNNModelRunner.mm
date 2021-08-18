@@ -165,7 +165,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
         float h = ptr[3] - y;
         bboxes.push_back(CGRectMake(x, y, w, h));
         
-        auto mask = maskTensor[i];
+        auto mask = maskTensor[i][0];
         std::vector<UInt8> maskGrayScale(mask.numel());
         for (int j = 0; j < mask.numel(); ++j) {
             int pixel = (int)(mask.data_ptr<float>()[j] * 255.0);
@@ -183,7 +183,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
         b = cv::Scalar(blue * 255.0);
         g = cv::Scalar(green * 255.0);
         r = cv::Scalar(red * 255.0);
-        cv::Mat a(12, 12, CV_8UC1, maskGrayScale.data());
+        cv::Mat a(28, 28, CV_8UC1, maskGrayScale.data());
         cv::resize(a, a, cv::Size(w, h));
         cv::threshold(a, a, 128, 128, 0);
         std::vector<cv::Mat> ch = {b, g, r, a};
@@ -229,13 +229,13 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
         @"boxwithnmslimit_0:0",
         @"boxwithnmslimit_0:1",
         @"boxwithnmslimit_0:2",
-        @"342"
+        @"680"
     };
     std::vector<std::vector<int64_t>> outputSizes {
         {10},
         {10, 4},
         {10},
-        {10, 1, 12, 12}
+        {10, 80, 28, 28}
     };
     std::vector<at::Tensor> outputs;
     for(int i=0; i< outputNames.size(); ++i) {

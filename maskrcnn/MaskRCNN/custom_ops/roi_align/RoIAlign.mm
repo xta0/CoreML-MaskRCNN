@@ -1,3 +1,5 @@
+// Copyright 2004-present Facebook. All Rights Reserved.
+
 #include "RoIAlign.h"
 #include "roi_align.h"
 #include <torch/script.h>

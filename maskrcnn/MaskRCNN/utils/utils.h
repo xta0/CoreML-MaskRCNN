@@ -61,7 +61,7 @@ static UIImage *drawMasks(UIImage *image,
             CGContextSetStrokeColorWithColor(context, [randomColor() CGColor]);
             CGContextStrokeRect(context, CGRectMake(box.origin.x, box.origin.y, box.size.width, box.size.height));
             // draw mask
-//            [masks[i] drawInRect:CGRectMake(box.origin.x, box.origin.y, box.size.width, box.size.height)];
+            [masks[i] drawInRect:CGRectMake(box.origin.x, box.origin.y, box.size.width, box.size.height)];
         }
     }
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();

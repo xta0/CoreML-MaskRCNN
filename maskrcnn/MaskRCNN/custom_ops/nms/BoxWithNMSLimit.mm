@@ -1,3 +1,5 @@
+// Copyright 2004-present Facebook. All Rights Reserved.
+
 #include "BoxWithNMSLimit.h"
 #include "box_with_nms_limit.h"
 #include <string>
