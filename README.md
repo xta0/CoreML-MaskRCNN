@@ -2,7 +2,7 @@
 
 ### Regarding the model
 
-The model was trained on [d2go](https://github.com/facebookresearch/d2go). The architecture can be found at [Mask-RCNN-FBNetV3A-dsmask](https://github.com/facebookresearch/d2go/blob/main/configs/mask_rcnn_fbnetv3a_dsmask_C4.yaml).
+The model was trained on [d2go](https://github.com/facebookresearch/d2go). The architecture can be found at [Mask-RCNN-FBNetV3A-dsmask](https://gist.github.com/xta0/b9a0547da4e082052d704c46eb206848).
 
 ### Regarding the demo app
 
