@@ -8,7 +8,7 @@ The model was trained on [d2go](https://github.com/facebookresearch/d2go). The a
 
 The demo app is located in `maskrcnn/` directory. To run the app, simply do `pod install`. For the custom ops, we're using eigen(3.3.9) for vectorization. The code was written in C++.
 
-<img src="https://github.com/xta0/CoreML-MaskRCNN/blob/master/maskrcnn/screenshot.png" width="120">
+<img src="https://github.com/xta0/CoreML-MaskRCNN/blob/master/maskrcnn/screenshot.png" width="240">
 
 ### Run the converter
 
