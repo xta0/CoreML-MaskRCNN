@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0A1C88526CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0A1C88426CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel */; };
-		A0BC4C6526CDC78B00AB3567 /* maskrcnn_oss_coreml2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0BC4C6426CDC78A00AB3567 /* maskrcnn_oss_coreml2.mlmodel */; };
+		A0663C5A2718085D00CB5F19 /* maskrcnn_oss_coreml.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0663C592718085D00CB5F19 /* maskrcnn_oss_coreml.mlmodel */; };
 		A0EC79A726C739530022E39A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC79A626C739530022E39A /* AppDelegate.m */; };
 		A0EC79AA26C739530022E39A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC79A926C739530022E39A /* SceneDelegate.m */; };
 		A0EC79AD26C739530022E39A /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0EC79AC26C739530022E39A /* ViewController.mm */; };
@@ -32,8 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A0A1C88426CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_oss_coreml.mlmodel; sourceTree = "<group>"; };
-		A0BC4C6426CDC78A00AB3567 /* maskrcnn_oss_coreml2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_oss_coreml2.mlmodel; sourceTree = "<group>"; };
+		A0663C592718085D00CB5F19 /* maskrcnn_oss_coreml.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = maskrcnn_oss_coreml.mlmodel; sourceTree = "<group>"; };
 		A0EC79A226C739530022E39A /* MaskRCNN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaskRCNN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0EC79A526C739530022E39A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A0EC79A626C739530022E39A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -99,8 +97,7 @@
 		A0A1C88326CCF36500D2818B /* model */ = {
 			isa = PBXGroup;
 			children = (
-				A0BC4C6426CDC78A00AB3567 /* maskrcnn_oss_coreml2.mlmodel */,
-				A0A1C88426CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel */,
+				A0663C592718085D00CB5F19 /* maskrcnn_oss_coreml.mlmodel */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -300,9 +297,8 @@
 				A0EC87C926C78D560022E39A /* bbox_transform.cpp in Sources */,
 				A0EC87BB26C78BEE0022E39A /* generate_proposals.cpp in Sources */,
 				A0EC87C526C78C600022E39A /* roi_align.cpp in Sources */,
-				A0BC4C6526CDC78B00AB3567 /* maskrcnn_oss_coreml2.mlmodel in Sources */,
 				A0EC79A726C739530022E39A /* AppDelegate.m in Sources */,
-				A0A1C88526CCF36500D2818B /* maskrcnn_oss_coreml.mlmodel in Sources */,
+				A0663C5A2718085D00CB5F19 /* maskrcnn_oss_coreml.mlmodel in Sources */,
 				A0EC87C326C78C600022E39A /* roi_align-cpu.cpp in Sources */,
 				A0EC87D526C78E6E0022E39A /* RoIAlign.mm in Sources */,
 				A0EC79B826C739550022E39A /* main.m in Sources */,

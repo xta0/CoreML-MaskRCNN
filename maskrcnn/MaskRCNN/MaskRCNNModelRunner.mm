@@ -138,7 +138,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
     
     // collect bbox scores
     std::vector<float> scores;
-    auto bboxScores = results[0];
+    auto bboxScores = results[1];
     float *ptr = bboxScores.data_ptr<float>();
     scores.reserve(bboxScores.numel());
     for (int i = 0; i < bboxScores.numel(); ++i) {
@@ -147,7 +147,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
     
     // collect bounding boxes
     std::vector<CGRect> bboxes;
-    auto bboxTensor = results[1]; // [N, 4]
+    auto bboxTensor = results[0]; // [N, 4]
     int64_t bboxNum = bboxTensor.size(0);
     
     // collect masks
@@ -165,7 +165,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
         float h = ptr[3] - y;
         bboxes.push_back(CGRectMake(x, y, w, h));
         
-        auto mask = maskTensor[i][0];
+        auto mask = maskTensor[i];
         std::vector<UInt8> maskGrayScale(mask.numel());
         for (int j = 0; j < mask.numel(); ++j) {
             int pixel = (int)(mask.data_ptr<float>()[j] * 255.0);
@@ -183,7 +183,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
         b = cv::Scalar(blue * 255.0);
         g = cv::Scalar(green * 255.0);
         r = cv::Scalar(red * 255.0);
-        cv::Mat a(28, 28, CV_8UC1, maskGrayScale.data());
+        cv::Mat a(12, 12, CV_8UC1, maskGrayScale.data());
         cv::resize(a, a, cv::Size(w, h));
         cv::threshold(a, a, 128, 128, 0);
         std::vector<cv::Mat> ch = {b, g, r, a};
@@ -199,7 +199,7 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
 - (void)loadModel {
     NSError* error;
     MLModelConfiguration* config = [MLModelConfiguration alloc];
-    config.computeUnits = MLComputeUnitsAll;
+    config.computeUnits = MLComputeUnitsCPUAndGPU;
     config.allowLowPrecisionAccumulationOnGPU = YES;
 //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *basePath = paths.firstObject;
@@ -233,16 +233,16 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
                                error:&error];
     NSLog(@"took: %.2fms", [date timeIntervalSinceNow] * -1000);
     std::vector<NSString*> outputNames {
-        @"boxwithnmslimit_0:0",
-        @"boxwithnmslimit_0:1",
+        @"boxwithnmslimit_0_1",
+        @"boxwithnmslimit_0_0",
         @"boxwithnmslimit_0:2",
-        @"680"
+        @"var_679"
     };
     std::vector<std::vector<int64_t>> outputSizes {
-        {10},
         {10, 4},
         {10},
-        {10, 80, 28, 28}
+        {10},
+        {10, 1, 12, 12}
     };
     std::vector<at::Tensor> outputs;
     for(int i=0; i< outputNames.size(); ++i) {

@@ -28,8 +28,9 @@ graph = m._c._get_method("forward").graph
 print(graph)
 
 
-x1 = torch.rand(1, 3, 398, 224)
+x1 = torch.rand(1, 3, 224, 336)
 x2 = torch.rand(1, 3)
 inputs = convert_inputs([x1, x2])
 mlmodel = ct.convert(m, inputs=[tuple(inputs)])
-mlmodel.save("./maskrcnn_coreml.mlmodel")
+print(mlmodel)
+mlmodel.save("./maskrcnn_oss_coreml.mlmodel")

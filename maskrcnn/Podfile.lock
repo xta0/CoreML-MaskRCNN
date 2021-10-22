@@ -1,0 +1,24 @@
+PODS:
+  - LibTorch (1.9.0):
+    - LibTorch/Core (= 1.9.0)
+  - LibTorch/Core (1.9.0):
+    - LibTorch/Torch
+  - LibTorch/Torch (1.9.0)
+  - OpenCV (4.3.0)
+
+DEPENDENCIES:
+  - LibTorch
+  - OpenCV
+
+SPEC REPOS:
+  trunk:
+    - LibTorch
+    - OpenCV
+
+SPEC CHECKSUMS:
+  LibTorch: d89f452b8b932002bd98884b3921850a95c35e14
+  OpenCV: 681e0451c1e54c5930a8922277f817ed5d5ab459
+
+PODFILE CHECKSUM: 9ad9b73162b241b502dcea8b8beb85437c5b207e
+
+COCOAPODS: 1.10.0
