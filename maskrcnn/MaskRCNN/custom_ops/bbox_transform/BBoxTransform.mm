@@ -1,12 +1,10 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include "BBoxTransform.h"
-#include "bbox_transform.h"
-
-#include <vector>
-#include <torch/script.h>
-
+#import "BBoxTransform.h"
 #import "multiArray.h"
+
+#include "bbox_transform.h"
+#include <caffe2/core/timer.h>
 
 @implementation BBoxTransform
 {
@@ -31,7 +29,7 @@
     for(int i=0; i<4; ++i){
         weights_.push_back(weights.data_ptr<float>()[i]);
     }
-    NSDate* date = [NSDate date];
+    caffe2::Timer t;
     auto results = caffe2::fb::BBoxTransformCPUKernel(roi_in,
                                                       delta_in,
                                                       iminfo_in,
@@ -43,7 +41,7 @@
                                                       angle_bound_hi_,
                                                       clip_angle_thresh_,
                                                       legacy_plus_one_);
-    NSLog(@"[BBoxTransform] took: %.2fms", [date timeIntervalSinceNow] * -1000);
+    std::cout<<"[BBoxTransform] took: "<<t.MilliSeconds()<<" ms"<<std::endl;
     auto box_out          = std::get<0>(results);
     auto roi_batch_splits = std::get<1>(results);
     MLMultiArray* output0 = outputs[0];

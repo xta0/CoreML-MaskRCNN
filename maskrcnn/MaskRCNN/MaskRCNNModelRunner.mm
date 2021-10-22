@@ -16,6 +16,7 @@
 #import <opencv2/imgproc/types_c.h>
 
 #include <LibTorch/LibTorch.h>
+#include <caffe2/core/timer.h>
 
 #include <vector>
 #include <string>
@@ -226,12 +227,12 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
     PTMCoreMLFeatureProvider* inputFeature =
     [[PTMCoreMLFeatureProvider alloc] initWithFeatureSpecs:inputs];
     MLPredictionOptions* options = [[MLPredictionOptions alloc] init];
-    NSDate* date = [NSDate date];
+    caffe2::Timer t;
     id<MLFeatureProvider> outputFeatures =
     [_mlModel predictionFromFeatures:inputFeature
                              options:options
                                error:&error];
-    NSLog(@"took: %.2fms", [date timeIntervalSinceNow] * -1000);
+    std::cout<<"forward took: "<<t.MilliSeconds()<<" ms"<<std::endl;
     std::vector<NSString*> outputNames {
         @"boxwithnmslimit_0_1",
         @"boxwithnmslimit_0_0",

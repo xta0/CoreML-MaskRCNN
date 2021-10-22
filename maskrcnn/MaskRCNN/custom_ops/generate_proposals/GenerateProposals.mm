@@ -1,9 +1,10 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include "GenerateProposals.h"
-#include "generate_proposals.h"
-#include <torch/script.h>
+#import "GenerateProposals.h"
 #import "multiArray.h"
+
+#include "generate_proposals.h"
+#include <caffe2/core/timer.h>
 
 @implementation GenerateProposals {
     double spatial_scale_;
@@ -25,7 +26,7 @@
     at::Tensor im_info_tensor = tensorFromMultiArray(inputs[2], 2);
     at::Tensor anchors_tensor = tensorFromMultiArray(inputs[3], 2);
     
-    NSDate* date = [NSDate date];
+    caffe2::Timer t;
     auto result = caffe2::fb::GenerateProposalsCPUKernel(
           scores,
           bbox_deltas,
@@ -42,7 +43,7 @@
           clip_angle_thresh_,
           legacy_plus_one_,
           {});
-    NSLog(@"[Generate Proposals] took: %.2fms", [date timeIntervalSinceNow] * -1000);
+    std::cout<<"[Generate Proposals] took: "<<t.MilliSeconds()<<" ms"<<std::endl;
     auto out_rois = std::get<0>(result);
     auto out_rois_prob = std::get<1>(result);
     memcpy(outputs[0].dataPointer, out_rois.data_ptr<float>(), out_rois.numel() * sizeof(float));

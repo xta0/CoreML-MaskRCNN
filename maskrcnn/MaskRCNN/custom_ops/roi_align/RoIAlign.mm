@@ -1,9 +1,10 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include "RoIAlign.h"
-#include "roi_align.h"
-#include <torch/script.h>
+#import "RoIAlign.h"
 #import "multiArray.h"
+
+#include "roi_align.h"
+#include <caffe2/core/timer.h>
 
 @implementation RoIAlign {
     double spatial_scale_;
@@ -17,7 +18,7 @@
     
     at::Tensor features = tensorFromMultiArray(inputs[0], 4);
     at::Tensor rois     = tensorFromMultiArray(inputs[1], 2);
-    NSDate* date = [NSDate date];
+    caffe2::Timer t;
     auto result = caffe2::fb::RoIAlignCPUKernel(features,
                                                 rois,
                                                 "NCHW",
@@ -27,7 +28,7 @@
                                                 sampling_ratio_,
                                                 aligned_,
                                                 {});
-    NSLog(@"[RoIAlign] took: %.2fms", [date timeIntervalSinceNow] * -1000);
+    std::cout<<"[RoIAlign] took: "<<t.MilliSeconds()<<" ms"<<std::endl;
     memcpy(outputs[0].dataPointer, result.data_ptr<float>(), result.numel() * sizeof(float));
     return YES;
 }

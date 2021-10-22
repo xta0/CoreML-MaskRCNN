@@ -1,9 +1,10 @@
 // Copyright 2004-present Facebook. All Rights Reserved.
 
-#include "BoxWithNMSLimit.h"
-#include "box_with_nms_limit.h"
-#include <string>
+#import "BoxWithNMSLimit.h"
 #import "multiArray.h"
+
+#include "box_with_nms_limit.h"
+#include <caffe2/core/timer.h>
 
 @implementation BoxWithNMSLimit {
     double score_thres_;
@@ -26,7 +27,7 @@
     at::Tensor tboxes        = tensorFromMultiArray(inputs[1], 2);
     at::Tensor tbatch_splits = tensorFromMultiArray(inputs[2], 1);
     
-    NSDate* date = [NSDate date];
+    caffe2::Timer t;
     auto results = caffe2::fb::BoxWithNMSLimitCPUKernel(tscores,
                                                         tboxes,
                                                         tbatch_splits,
@@ -42,7 +43,7 @@
                                                         input_boxes_include_bg_cls_,
                                                         output_classes_include_bg_cls_,
                                                         legacy_plus_one_);
-    NSLog(@"[BoxWithNMSLimit] took: %.2fms", [date timeIntervalSinceNow] * -1000);
+    std::cout<<"[BoxWithNMSLimit] took: "<<t.MilliSeconds()<<" ms"<<std::endl;
     auto out_scores = std::get<0>(results);
     auto out_boxes = std::get<1>(results);
     auto out_classes = std::get<2>(results);
@@ -58,10 +59,7 @@
     
     memset(outputs[2].dataPointer, 0, outputs[2].count  * sizeof(float));
     memcpy(outputs[2].dataPointer, out_classes.data_ptr<float>(), out_classes.numel()  * sizeof(float));
-    
-//    memcpy(outputs[3].dataPointer, batch_split_out.data_ptr<float>(), batch_split_out.numel()  * sizeof(float));
-//    memcpy(outputs[4].dataPointer, out_keeps.data_ptr<int>(), out_keeps.numel()  * sizeof(int));
-//    memcpy(outputs[5].dataPointer, out_keeps_size.data_ptr<int>(), out_keeps_size.numel()  * sizeof(int));
+
     return YES;
 }
 
