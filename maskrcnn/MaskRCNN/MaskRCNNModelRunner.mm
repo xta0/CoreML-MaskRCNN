@@ -23,12 +23,12 @@
 
 const float BBOX_SCORE_THRESHOLD = 0.5;
 
-@interface PTMCoreMLFeatureProvider : NSObject<MLFeatureProvider>
+@interface CoreMLFeatureProvider : NSObject<MLFeatureProvider>
 - (instancetype)initWithFeatureSpecs:(const std::vector<FeatureSpecs>&)specs
                        CoreMLVersion:(int)ver;
 @end
 
-@implementation PTMCoreMLFeatureProvider {
+@implementation CoreMLFeatureProvider {
     std::vector<FeatureSpecs> _specs;
 }
 
@@ -224,8 +224,8 @@ const float BBOX_SCORE_THRESHOLD = 0.5;
 
 - (std::vector<at::Tensor>)_run:(const std::vector<FeatureSpecs>&)inputs {
     NSError* error = nil;
-    PTMCoreMLFeatureProvider* inputFeature =
-    [[PTMCoreMLFeatureProvider alloc] initWithFeatureSpecs:inputs];
+    CoreMLFeatureProvider* inputFeature =
+    [[CoreMLFeatureProvider alloc] initWithFeatureSpecs:inputs];
     MLPredictionOptions* options = [[MLPredictionOptions alloc] init];
     caffe2::Timer t;
     id<MLFeatureProvider> outputFeatures =

@@ -1,9 +1,9 @@
 PODS:
-  - LibTorch (1.10.0):
-    - LibTorch/Core (= 1.10.0)
-  - LibTorch/Core (1.10.0):
+  - LibTorch (2.1.0):
+    - LibTorch/Core (= 2.1.0)
+  - LibTorch/Core (2.1.0):
     - LibTorch/Torch
-  - LibTorch/Torch (1.10.0)
+  - LibTorch/Torch (2.1.0)
   - OpenCV (4.3.0)
 
 DEPENDENCIES:
@@ -16,9 +16,9 @@ SPEC REPOS:
     - OpenCV
 
 SPEC CHECKSUMS:
-  LibTorch: 0eeffb238d9c1bafab350353d19dc3c8d5c7442f
+  LibTorch: cad2028d9a4daedf1a43f1ea269bc9a3741ce7b0
   OpenCV: 681e0451c1e54c5930a8922277f817ed5d5ab459
 
 PODFILE CHECKSUM: 9ad9b73162b241b502dcea8b8beb85437c5b207e
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.16.2
